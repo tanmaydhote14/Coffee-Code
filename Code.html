@@ -1,1 +1,147 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroDetect AI | EEG Analysis</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="auth-view" class="view-section active animate-fade-in">
+        <div class="auth-card">
+            <div class="logo auth-logo"><i class="ph ph-brain"></i> NeuroDetect <span>AI</span></div>
+            <h2 id="auth-title">System Login</h2>
+            <form id="auth-form">
+                <div class="input-group">
+                    <label>Physician ID</label>
+                    <div class="input-wrapper">
+                        <i class="ph ph-user"></i>
+                        <input type="text" id="auth-username" required placeholder="Dr. Smith">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <div class="input-wrapper">
+                        <i class="ph ph-lock"></i>
+                        <input type="password" id="auth-password" required placeholder="••••••••">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100" id="auth-btn">Authenticate <i class="ph ph-arrow-right"></i></button>
+            </form>
+            <p class="auth-toggle">
+                <span id="auth-prompt">New user?</span> 
+                <a href="#" id="toggle-auth">Request Access</a>
+            </p>
+        </div>
+    </div>
+
+    <div id="app-view" class="dashboard view-section hidden">
+        <aside class="sidebar">
+            <div class="logo"><i class="ph ph-brain"></i> NeuroDetect <span>AI</span></div>
+            <div class="user-info">
+                <div class="avatar"><i class="ph ph-user-circle"></i></div>
+                <div>
+                    <span class="user-label">Logged in as</span>
+                    <strong id="current-user-display">Dr. Smith</strong>
+                </div>
+            </div>
+            <nav>
+                <a href="#" class="nav-link active" data-target="dashboard-view"><i class="ph ph-squares-four"></i> Dashboard</a>
+                <a href="#" class="nav-link" data-target="records-view"><i class="ph ph-folders"></i> Patient Records</a>
+                <a href="#" id="logout-btn" class="logout-link"><i class="ph ph-sign-out"></i> Secure Logout</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            
+            <div id="dashboard-view" class="app-page active animate-slide-up">
+                <header>
+                    <h1>Clinical EEG Analysis</h1>
+                    <p>Real-time biomarker processing and risk evaluation pipeline.</p>
+                </header>
+
+                <div class="grid-container">
+                    <section class="card upload-section hover-lift">
+                        <h2><i class="ph ph-file-csv"></i> Patient Data Input</h2>
+                        <div class="input-group mb-1">
+                            <label>Patient Identifier</label>
+                            <input type="text" id="patient-id" placeholder="e.g., PT-9824" required>
+                        </div>
+                        <div class="drop-zone" id="drop-zone">
+                            <div class="scan-line hidden" id="scan-line"></div>
+                            <i class="ph ph-cloud-arrow-up drop-icon"></i>
+                            <p>Drag & drop EEG CSV here or <span>browse</span></p>
+                            <input type="file" id="file-upload" hidden accept=".csv">
+                        </div>
+                        <button class="btn btn-primary w-100" id="analyze-btn" disabled>
+                            <i class="ph ph-cpu"></i> Run AI Analysis
+                        </button>
+                    </section>
+
+                    <section class="card risk-section hover-lift">
+                        <h2><i class="ph ph-heartbeat"></i> Early Risk Scoring</h2>
+                        <div class="score-container">
+                            <div class="score-circle" id="risk-circle">
+                                <span id="risk-score">--</span><span class="percent">%</span>
+                            </div>
+                        </div>
+                        <p id="risk-status" class="status-text">Awaiting Data...</p>
+                    </section>
+
+                    <section class="card visualization-section span-2 hover-lift">
+                        <div class="section-header">
+                            <h2><i class="ph ph-activity"></i> Brain Activity Visualization</h2>
+                            <span class="badge">Frontal Lobe (Fp1, Fp2)</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="eegChart"></canvas>
+                        </div>
+                    </section>
+
+                    <section class="card explainable-section span-2 hover-lift">
+                        <h2><i class="ph ph-terminal-window"></i> Explainable AI Insights</h2>
+                        <div class="terminal" id="ai-logs">
+                            <p>> Neural network initialized.</p>
+                            <p>> System ready. Waiting for EEG dataset input...</p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <div id="records-view" class="app-page hidden">
+                <header>
+                    <h1>Patient Records Database</h1>
+                    <p>Historical AI analysis logs and patient risk profiles.</p>
+                </header>
+                <section class="card animate-slide-up">
+                    <div class="table-actions">
+                        <button class="btn btn-outline" id="clear-records-btn"><i class="ph ph-trash"></i> Clear History</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="records-table">
+                            <thead>
+                                <tr>
+                                    <th>Date & Time</th>
+                                    <th>Patient ID</th>
+                                    <th>Risk Score</th>
+                                    <th>Clinical Status</th>
+                                    <th>Attending Physician</th>
+                                </tr>
+                            </thead>
+                            <tbody id="records-table-body">
+                                </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
